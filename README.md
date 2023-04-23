@@ -1,4 +1,4 @@
-# Classic
+# Class
 
 A tiny class module for Lua. Attempts to stay simple and provide decent
 performance by avoiding unnecessary over-abstraction.
@@ -6,11 +6,11 @@ performance by avoiding unnecessary over-abstraction.
 
 ## Usage
 
-The [module](classic.lua) should be dropped in to an existing project and
+The [module](class.lua) should be dropped in to an existing project and
 required by it:
 
 ```lua
-Object = require "classic"
+Class = require "class"
 ```
 
 The module returns the object base class which can be extended to create any
@@ -19,7 +19,7 @@ additional classes.
 
 ### Creating a new class
 ```lua
-Point = Object:extend()
+Point = Class("Point")
 
 function Point:new(x, y)
   self.x = x or 0
@@ -34,7 +34,7 @@ local p = Point(10, 20)
 
 ### Extending an existing class
 ```lua
-Rect = Point:extend()
+Rect = Class("Rect", "Point")
 
 function Rect:new(x, y, width, height)
   Rect.super.new(self, x, y)
@@ -46,14 +46,14 @@ end
 ### Checking an object's type
 ```lua
 local p = Point(10, 20)
-print(p:is(Object)) -- true
+print(p:is(Class)) -- true
 print(p:is(Point)) -- true
 print(p:is(Rect)) -- false 
 ```
 
 ### Using mixins
 ```lua
-PairPrinter = Object:extend()
+PairPrinter = Class("PairPrinter")
 
 function PairPrinter:printPairs()
   for k, v in pairs(self) do
@@ -62,7 +62,7 @@ function PairPrinter:printPairs()
 end
 
 
-Point = Object:extend()
+Point = Class("Point")
 Point:implement(PairPrinter)
 
 function Point:new(x, y)
@@ -77,7 +77,7 @@ p:printPairs()
 
 ### Using static variables
 ```lua
-Point = Object:extend()
+Point = Class("Point")
 Point.scale = 2
 
 function Point:new(x, y)
